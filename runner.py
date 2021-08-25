@@ -17,3 +17,12 @@ def load_checkpoint(path: Path) -> Dict[str, Any]:
         return json.loads(path.read_text(encoding="utf-8"))
     return {"completed_steps": [], "context": {}}
 
+
+def save_checkpoint(path: Path, state: Dict[str, Any]) -> None:
+    path.write_text(json.dumps(state, indent=2), encoding="utf-8")
+
+
+def save_metrics(path: Path, metrics: List[Dict[str, Any]]) -> None:
+    path.write_text(json.dumps(metrics, indent=2), encoding="utf-8")
+
+
