@@ -26,3 +26,13 @@ def save_metrics(path: Path, metrics: List[Dict[str, Any]]) -> None:
     path.write_text(json.dumps(metrics, indent=2), encoding="utf-8")
 
 
+def run_workflow(target_url: str, api_check_url: str, reset: bool = False) -> None:
+    if reset and CHECKPOINT_FILE.exists():
+        CHECKPOINT_FILE.unlink()
+
+    state = load_checkpoint(CHECKPOINT_FILE)
+    metrics: List[Dict[str, Any]] = []
+    ARTIFACT_DIR.mkdir(exist_ok=True)
+
+    steps = ["api_preflight", "open_page", "extract_heading", "verify_content"]
+
