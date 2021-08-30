@@ -36,3 +36,12 @@ def run_workflow(target_url: str, api_check_url: str, reset: bool = False) -> No
 
     steps = ["api_preflight", "open_page", "extract_heading", "verify_content"]
 
+    with sync_playwright() as pw:
+        browser = pw.chromium.launch(headless=True)
+        context = browser.new_context()
+        page = context.new_page()
+
+        for step_name in steps:
+            if step_name in state["completed_steps"]:
+                print("[SKIP] already done:", step_name)
+                continue
