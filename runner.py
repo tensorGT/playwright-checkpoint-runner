@@ -45,3 +45,13 @@ def run_workflow(target_url: str, api_check_url: str, reset: bool = False) -> No
             if step_name in state["completed_steps"]:
                 print("[SKIP] already done:", step_name)
                 continue
+
+            t0 = time.time()
+            try:
+                if step_name == "api_preflight":
+                    resp = httpx.get(api_check_url, timeout=5.0)
+                    state["context"]["api_status"] = resp.status_code
+                elif step_name == "open_page":
+                    page.goto(target_url, wait_until="domcontentloaded", timeout=10000)
+                    state["context"]["page_title"] = page.title()
+                elif step_name == "extract_heading":
