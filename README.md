@@ -6,3 +6,4 @@ automation script with Playwright and `httpx` that run multi-step browser + API 
 - saves progress to `checkpoint.json` so if it crash halfway, next run resume from where it stopped
 - takes screenshot + HTML snapshot inside `failure_artifacts/` when a step fail
 - writes timing metrics to `metrics.json`
+

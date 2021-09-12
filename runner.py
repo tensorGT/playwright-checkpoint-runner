@@ -55,3 +55,12 @@ def run_workflow(target_url: str, api_check_url: str, reset: bool = False) -> No
                     page.goto(target_url, wait_until="domcontentloaded", timeout=10000)
                     state["context"]["page_title"] = page.title()
                 elif step_name == "extract_heading":
+                    h1 = page.locator("h1").first
+                    h1.wait_for(state="visible", timeout=5000)
+                    state["context"]["h1"] = h1.inner_text()
+                elif step_name == "verify_content":
+                    body_len = len(page.inner_text("body"))
+                    if body_len == 0:
+                        raise RuntimeError("page body is empty")
+                    state["context"]["body_len"] = body_len
+
