@@ -7,3 +7,4 @@ automation script with Playwright and `httpx` that run multi-step browser + API 
 - takes screenshot + HTML snapshot inside `failure_artifacts/` when a step fail
 - writes timing metrics to `metrics.json`
 
+## usage

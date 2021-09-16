@@ -64,3 +64,13 @@ def run_workflow(target_url: str, api_check_url: str, reset: bool = False) -> No
                         raise RuntimeError("page body is empty")
                     state["context"]["body_len"] = body_len
 
+                elapsed_ms = round((time.time() - t0) * 1000, 2)
+                state["completed_steps"].append(step_name)
+                save_checkpoint(CHECKPOINT_FILE, state)
+                metrics.append({"step": step_name, "status": "ok", "duration_ms": elapsed_ms})
+                print("[OK] %s (%.1f ms)" % (step_name, elapsed_ms))
+
+            except Exception as err:
+                elapsed_ms = round((time.time() - t0) * 1000, 2)
+                metrics.append({"step": step_name, "status": "failed", "duration_ms": elapsed_ms, "error": str(err)})
+                try:
