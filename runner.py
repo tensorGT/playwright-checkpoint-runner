@@ -74,3 +74,12 @@ def run_workflow(target_url: str, api_check_url: str, reset: bool = False) -> No
                 elapsed_ms = round((time.time() - t0) * 1000, 2)
                 metrics.append({"step": step_name, "status": "failed", "duration_ms": elapsed_ms, "error": str(err)})
                 try:
+                    page.screenshot(path=str(ARTIFACT_DIR / ("fail_%s.png" % step_name)))
+                    (ARTIFACT_DIR / ("fail_%s.html" % step_name)).write_text(page.content(), encoding="utf-8")
+                except Exception:
+                    pass
+                save_metrics(METRICS_FILE, metrics)
+                browser.close()
+                raise RuntimeError("step %s failed: %s" % (step_name, err))
+
+        browser.close()

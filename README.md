@@ -8,3 +8,5 @@ automation script with Playwright and `httpx` that run multi-step browser + API 
 - writes timing metrics to `metrics.json`
 
 ## usage
+```bash
+pip install -r requirements.txt
