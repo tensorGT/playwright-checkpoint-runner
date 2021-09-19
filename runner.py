@@ -83,3 +83,13 @@ def run_workflow(target_url: str, api_check_url: str, reset: bool = False) -> No
                 raise RuntimeError("step %s failed: %s" % (step_name, err))
 
         browser.close()
+
+    save_metrics(METRICS_FILE, metrics)
+    print("workflow finished! metrics saved to", METRICS_FILE)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="playwright + api workflow runner with checkpoints")
+    parser.add_argument("--url", default="http://127.0.0.1:8000/", help="target page url")
+    parser.add_argument("--api", default="http://127.0.0.1:8000/", help="api preflight url")
+    parser.add_argument("--reset", action="store_true", help="ignore old checkpoint and start fresh")

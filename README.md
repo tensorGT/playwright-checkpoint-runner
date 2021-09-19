@@ -10,3 +10,4 @@ automation script with Playwright and `httpx` that run multi-step browser + API 
 ## usage
 ```bash
 pip install -r requirements.txt
+playwright install chromium
