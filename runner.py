@@ -93,3 +93,13 @@ def main() -> None:
     parser.add_argument("--url", default="http://127.0.0.1:8000/", help="target page url")
     parser.add_argument("--api", default="http://127.0.0.1:8000/", help="api preflight url")
     parser.add_argument("--reset", action="store_true", help="ignore old checkpoint and start fresh")
+    args = parser.parse_args()
+
+    try:
+        run_workflow(args.url, args.api, args.reset)
+    except Exception as err:
+        print("stopped with error (checkpoint saved so you can resume):", err)
+
+
+if __name__ == "__main__":
+    main()

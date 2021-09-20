@@ -11,3 +11,5 @@ automation script with Playwright and `httpx` that run multi-step browser + API 
 ```bash
 pip install -r requirements.txt
 playwright install chromium
+python runner.py --url http://127.0.0.1:8000/ --api http://127.0.0.1:8000/
+```
